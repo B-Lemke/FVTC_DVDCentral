@@ -63,7 +63,7 @@ namespace BJL.DVDCentral.BL
                         Id = dc.tblFormats.Any() ? dc.tblFormats.Max(f => f.Id) + 1 : 1
 
                     };
-
+                    this.Id = format.Id;
                     dc.tblFormats.Add(format);
 
                     //Return the rows effected

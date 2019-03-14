@@ -63,7 +63,7 @@ namespace BJL.DVDCentral.BL
                         Id = dc.tblRatings.Any() ? dc.tblRatings.Max(r => r.Id) + 1 : 1
 
                     };
-
+                    this.Id = rating.Id;
                     dc.tblRatings.Add(rating);
 
                     //Return the rows effected

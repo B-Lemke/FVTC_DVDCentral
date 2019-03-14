@@ -13,6 +13,7 @@ namespace BJL.DVDCentral.BL
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FullName => $"{FirstName} {LastName}";
 
         public void LoadById()
         {
@@ -66,7 +67,7 @@ namespace BJL.DVDCentral.BL
                         Id = dc.tblDirectors.Any() ? dc.tblDirectors.Max(d => d.Id) + 1 : 1
 
                     };
-
+                    this.Id = director.Id;
                     dc.tblDirectors.Add(director);
 
                     //Return the rows effected

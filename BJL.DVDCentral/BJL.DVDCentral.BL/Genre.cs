@@ -63,7 +63,7 @@ namespace BJL.DVDCentral.BL
                         Id = dc.tblGenres.Any() ? dc.tblGenres.Max(g => g.Id) + 1 : 1
 
                     };
-
+                    this.Id = genre.Id;
                     dc.tblGenres.Add(genre);
 
                     //Return the rows effected

@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Director.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="Movie.cs" />
     <Compile Include="Rating.cs" />
     <Compile Include="Format.cs" />
     <Compile Include="Genre.cs" />
