@@ -38,7 +38,7 @@ textarea {
 
 
 .bg-dark {
-    background: linear-gradient(90deg, #1b1b1e, #58a4b0) !important;
+    background: linear-gradient(90deg, #1b1b1e, #6495ed) !important;
     background-size: 600% 600% !important;
     -webkit-animation: HeaderGradientAnimation 30s ease infinite;
     -moz-animation: HeaderGradientAnimation 30s ease infinite;
@@ -89,4 +89,22 @@ textarea {
     100% {
         background-position: 0% 50%
     }
+}
+
+.body-content {
+    margin-top: 10px;
+    border: 3px solid #6495ed !important;
+}
+
+.manage-header {
+    background: #6495ed;
+    color: white;
+}
+
+.btn-info {
+    background: #6495ed !important;
+}
+
+footer{
+    text-align: center;
 }

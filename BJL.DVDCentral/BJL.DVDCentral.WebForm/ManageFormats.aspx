@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageFormats.aspx.cs" Inherits="BJL.DVDCentral.WebForm.ManageFormats" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="header rounded-top">
-        <h3>Formats</h3>
+        <h3 class="manage-header">Formats</h3>
     </div>
 
     <p></p>

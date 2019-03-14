@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="header rounded-top">
-        <h3>Directors</h3>
+        <h3 class="manage-header">Directors</h3>
     </div>
 
     <p></p>
