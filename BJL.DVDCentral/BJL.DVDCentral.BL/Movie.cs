@@ -193,8 +193,70 @@ namespace BJL.DVDCentral.BL
     {
         public void Load()
         {
-            LoadByGenreId(null);
+            try
+            {
+                using (DVDEntities dc = new DVDEntities())
+                {
+                    //Get the genrs from the database
+                    var movies = (from m in dc.tblMovies
+                                  join r in dc.tblRatings on m.RatingId equals r.Id
+                                  join f in dc.tblFormats on m.FormatId equals f.Id
+                                  join d in dc.tblDirectors on m.DirectorId equals d.Id
+                                  orderby m.Title
+                                  select new
+                                  {
+                                      MovieId = m.Id,
+                                      m.Description,
+                                      m.Cost,
+                                      m.DirectorId,
+                                      DirectorName = d.FirstName + " " + d.LastName,
+                                      m.FormatId,
+                                      FormatName = f.Description,
+                                      m.ImagePath,
+                                      m.Quantity,
+                                      m.RatingId,
+                                      RatingName = r.Description,
+                                      m.Title
+                                  }).ToList();
+                    //For each movie
+                    foreach (var m in movies)
+                    {
+
+      
+        
+                            //Movie not already in collection
+
+                            //Make a new movie and set its properties
+                            Movie movie = new Movie
+                            {
+                                Id = m.MovieId,
+                                Description = m.Description,
+                                Cost = m.Cost,
+                                DirectorId = m.DirectorId,
+                                DirectorFullName = m.DirectorName,
+                                FormatId = m.FormatId,
+                                FormatName = m.FormatName,
+                                ImagePath = m.ImagePath,
+                                Quantity = m.Quantity,
+                                RatingId = m.RatingId,
+                                RatingName = m.RatingName,
+                                Title = m.Title,
+                            };
+                            //Add it to the movie list
+                            this.Add(movie);
+                        
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
+    
 
 
         public void LoadByGenreId(int? genreId)
@@ -205,11 +267,11 @@ namespace BJL.DVDCentral.BL
                 {
                     //Get the genrs from the database
                     var movies = (from m in dc.tblMovies
-                                  join mg in dc.tblMovieGenres on m.Id equals mg.MovieId
-                                  join g in dc.tblGenres on mg.GenreId equals g.Id
                                   join r in dc.tblRatings on m.RatingId equals r.Id
                                   join f in dc.tblFormats on m.FormatId equals f.Id
                                   join d in dc.tblDirectors on m.DirectorId equals d.Id
+                                  join mg in dc.tblMovieGenres on m.Id equals mg.MovieId
+                                  join g in dc.tblGenres on mg.GenreId equals g.Id
                                   where (mg.GenreId == genreId || genreId == null)
                                   orderby m.Title
                                   select new

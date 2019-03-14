@@ -15,7 +15,7 @@ namespace BJL.DVDCentral.BL.Test
 
             movies.Load();
 
-            int expected = 3;
+            int expected = 4;
             int actual = movies.Count;
 
             Assert.AreEqual(expected, actual);
