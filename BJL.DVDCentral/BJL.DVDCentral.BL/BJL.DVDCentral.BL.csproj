@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="Director.cs" />
     <Compile Include="Customer.cs" />
+    <Compile Include="OrderItem.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="Movie.cs" />
     <Compile Include="Rating.cs" />
     <Compile Include="Format.cs" />

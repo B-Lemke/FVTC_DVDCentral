@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="utDirector.cs" />
     <Compile Include="utCustomer.cs" />
+    <Compile Include="utOrderItem.cs" />
+    <Compile Include="utOrder.cs" />
     <Compile Include="utMovie.cs" />
     <Compile Include="utRating.cs" />
     <Compile Include="utGenre.cs" />
