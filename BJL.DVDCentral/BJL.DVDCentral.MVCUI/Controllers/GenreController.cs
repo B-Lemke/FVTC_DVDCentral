@@ -96,5 +96,16 @@ namespace BJL.DVDCentral.MVCUI.Controllers
                 return View(genre);
             }
         }
+
+
+
+        //Sidebar
+        [ChildActionOnly]
+        public ActionResult Sidebar()
+        {
+            GenreList genres = new GenreList();
+            genres.Load();
+            return PartialView(genres);
+        }
     }
 }

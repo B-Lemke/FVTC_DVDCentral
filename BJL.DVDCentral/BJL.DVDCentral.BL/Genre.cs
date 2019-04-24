@@ -189,4 +189,40 @@ namespace BJL.DVDCentral.BL
             }
         }
     }
+
+
+    static public class MovieGenre
+    {
+        static public void Add(int movieId, int genreId)
+        {
+            using (DVDEntities dc = new DVDEntities())
+            {
+                tblMovieGenre mg = new tblMovieGenre
+                {
+                    Id = dc.tblMovieGenres.Any() ? dc.tblMovieGenres.Max(m => m.Id) + 1 : 1,
+                    MovieId = movieId,
+                    GenreId = genreId
+                };
+
+                dc.tblMovieGenres.Add(mg);
+                dc.SaveChanges();
+            }
+
+
+        }
+
+        static public void Delete(int movieId, int genreId)
+        {
+
+            using (DVDEntities dc = new DVDEntities())
+            {
+                tblMovieGenre movieGenre = dc.tblMovieGenres.FirstOrDefault(mg => mg.MovieId == movieId && mg.GenreId == genreId);
+                if (movieGenre != null)
+                {
+                    dc.tblMovieGenres.Remove(movieGenre);
+                    dc.SaveChanges();
+                }
+            }
+        }
+    }
 }

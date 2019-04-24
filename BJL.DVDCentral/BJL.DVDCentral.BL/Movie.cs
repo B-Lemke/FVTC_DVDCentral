@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,16 +14,20 @@ namespace BJL.DVDCentral.BL
         public int Id { get; set; }
         public decimal Cost { get; set; }
         public int FormatId { get; set; }
+        [DisplayName("Format")]
         public string FormatName { get; set; }
         public int Quantity { get; set; }
         public int DirectorId { get; set; }
+        [DisplayName("Director")]
         public string DirectorFullName { get; set; }
+        [DisplayName("Image Path")]
         public string ImagePath { get; set; }
         public string Description { get; set; }
         public int RatingId { get; set; }
+        [DisplayName("Rating")]
         public string RatingName { get; set; }
         public string Title { get; set; }
-        public List<String> Genres { get; set; }
+        public GenreList Genres { get; set; }
 
         public void LoadById()
         {
@@ -49,6 +54,8 @@ namespace BJL.DVDCentral.BL
                             this.ImagePath = movie.ImagePath;
                             this.Quantity = movie.Quantity;
                             this.RatingId = movie.RatingId;
+
+                            this.LoadGenres();
                         }
                         else
                         {
@@ -187,6 +194,36 @@ namespace BJL.DVDCentral.BL
             }
         }
 
+
+        public void LoadGenres()
+        {
+            using (DVDEntities dc = new DVDEntities())
+            {
+                Genres = new GenreList();
+                Genres.Clear();
+
+                var genres = from mg in dc.tblMovieGenres
+                               join g in dc.tblGenres on mg.GenreId equals g.Id
+                               where mg.MovieId == this.Id
+                               select new
+                               {
+                                   g.Id,
+                                   g.Description
+                               };
+
+                foreach (var genre in genres)
+                {
+                    Genre newGenre = new Genre
+                    {
+                        Id = genre.Id,
+                        Description = genre.Description
+                    };
+
+                    this.Genres.Add(newGenre);
+                }
+            }
+        }
+
     }
 
     public class MovieList : List<Movie>
@@ -222,8 +259,6 @@ namespace BJL.DVDCentral.BL
                     foreach (var m in movies)
                     {
 
-      
-        
                             //Movie not already in collection
 
                             //Make a new movie and set its properties
@@ -242,11 +277,14 @@ namespace BJL.DVDCentral.BL
                                 RatingName = m.RatingName,
                                 Title = m.Title,
                             };
+                            movie.LoadGenres();
                             //Add it to the movie list
+
+
                             this.Add(movie);
                         
 
-
+              
                     }
                 }
             }
@@ -288,15 +326,14 @@ namespace BJL.DVDCentral.BL
                                       m.RatingId,
                                       RatingName = r.Description,
                                       m.Title,
-                                      GenreDescription = g.Description
+                                      GenreId = g.Id
                                   }).ToList();
                     //For each movie
                     foreach (var m in movies)
                     {
                         if (this.Any(mov => mov.Id == m.MovieId))
                         {
-                            //Movie already in collection, just add the new genre
-                            this.FirstOrDefault(mov => mov.Id == m.MovieId).Genres.Add(m.GenreDescription);
+
                         }
                         else
                         {
@@ -318,8 +355,8 @@ namespace BJL.DVDCentral.BL
                                 RatingName = m.RatingName,
                                 Title = m.Title,
                             };
-                            movie.Genres = new List<string>();
-                            movie.Genres.Add(m.GenreDescription);
+                            movie.LoadGenres();
+
                             //Add it to the movie list
                             this.Add(movie);
                         }
@@ -333,6 +370,9 @@ namespace BJL.DVDCentral.BL
 
                 throw ex;
             }
+
+
+
         }
     }
 }
