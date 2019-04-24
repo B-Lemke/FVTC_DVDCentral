@@ -43,23 +43,50 @@ namespace BJL.DVDCentral.MVCUI.Controllers
         // GET: Movie/Create
         public ActionResult Create()
         {
-            Movie movie = new Movie();
-            return View(movie);
+            MovieGenresDirectorsRatingsFormats movieVM = new MovieGenresDirectorsRatingsFormats();
+
+            movieVM.Movie = new Movie();
+
+            movieVM.DirectorList = new DirectorList();
+            movieVM.DirectorList.Load();
+
+            movieVM.FormatList = new FormatList();
+            movieVM.FormatList.Load();
+
+            movieVM.GenreList = new GenreList();
+            movieVM.GenreList.Load();
+
+            movieVM.RatingList = new RatingList();
+            movieVM.RatingList.Load();
+
+
+            return View(movieVM);
         }
 
         // POST: Movie/Create
         [HttpPost]
-        public ActionResult Create(Movie movie)
+        public ActionResult Create(MovieGenresDirectorsRatingsFormats movieVM)
         {
             try
             {
-                // TODO: Add insert logic here
-                movie.Insert();
+
+                movieVM.Movie.Insert();
+
+
+                IEnumerable<int> newGenreIds = new List<int>();
+                if (movieVM.GenreIds != null)
+                {
+                    newGenreIds = movieVM.GenreIds;
+                }
+
+                newGenreIds.ToList().ForEach(a => MovieGenre.Add(movieVM.Movie.Id, a));
+
+
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View(movie);
+                return View(movieVM);
             }
         }
 
