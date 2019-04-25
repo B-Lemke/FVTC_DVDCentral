@@ -20,7 +20,7 @@ namespace BJL.DVDCentral.BL
         public int DirectorId { get; set; }
         [DisplayName("Director")]
         public string DirectorFullName { get; set; }
-        [DisplayName("Image Path")]
+        [DisplayName("Image")]
         public string ImagePath { get; set; }
         public string Description { get; set; }
         public int RatingId { get; set; }
@@ -39,7 +39,26 @@ namespace BJL.DVDCentral.BL
                     //Make sure that the ID is set and valid
                     if (this.Id >= 0)
                     {
-                        tblMovie movie = dc.tblMovies.FirstOrDefault(m => m.Id == this.Id);
+                        var movie = (from m in dc.tblMovies
+                                     join r in dc.tblRatings on m.RatingId equals r.Id
+                                     join f in dc.tblFormats on m.FormatId equals f.Id
+                                     join d in dc.tblDirectors on m.DirectorId equals d.Id
+                                     where m.Id == this.Id
+                                     select new
+                                     {
+                                         MovieId = m.Id,
+                                         m.Description,
+                                         m.Cost,
+                                         m.DirectorId,
+                                         DirectorName = d.FirstName + " " + d.LastName,
+                                         m.FormatId,
+                                         FormatName = f.Description,
+                                         m.ImagePath,
+                                         m.Quantity,
+                                         m.RatingId,
+                                         RatingName = r.Description,
+                                         m.Title
+                                     }).FirstOrDefault();
 
                         //Make sure that a movie was retrieved
                         if (movie != null)
@@ -49,11 +68,15 @@ namespace BJL.DVDCentral.BL
                             this.Cost = movie.Cost;
                             this.DirectorId = movie.DirectorId;
                             this.FormatId = movie.FormatId;
-                            this.Id = movie.Id;
+                            this.Id = movie.MovieId;
                             this.Title = movie.Title;
                             this.ImagePath = movie.ImagePath;
                             this.Quantity = movie.Quantity;
                             this.RatingId = movie.RatingId;
+                            this.RatingName = movie.RatingName;
+                            this.FormatName = movie.FormatName;
+                            this.DirectorFullName = movie.DirectorName;
+
 
                             this.LoadGenres();
                         }

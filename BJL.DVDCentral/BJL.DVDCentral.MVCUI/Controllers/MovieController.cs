@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,6 +14,7 @@ namespace BJL.DVDCentral.MVCUI.Controllers
         // GET: Movie
         public ActionResult Index()
         {
+            ViewBag.Message = "All Movies";
             MovieList movies = new MovieList();
             movies.Load();
             return View(movies);
@@ -26,7 +28,7 @@ namespace BJL.DVDCentral.MVCUI.Controllers
             Genre genre = new Genre { Id = id };
             genre.LoadById();
 
-            ViewBag.Message = "Movies with the genre " + genre.Description;
+            ViewBag.Message = "Movies with the Genre: " + genre.Description;
 
             return View("Index", movies);
 
@@ -69,10 +71,29 @@ namespace BJL.DVDCentral.MVCUI.Controllers
         {
             try
             {
+                //Image
+                if (movieVM.File != null)
+                {
+                    movieVM.Movie.ImagePath = movieVM.File.FileName;
+                    string target = Path.Combine(Server.MapPath("~/Images"), Path.GetFileName(movieVM.File.FileName));
 
+                    if (!System.IO.File.Exists(target))
+                    {
+                        //File doesn't already exist, save it
+                        movieVM.File.SaveAs(target);
+                        ViewBag.Message = "File uploaded successfully!";
+                    }
+                    else
+                    {
+                        //File already exists with this path
+                        ViewBag.Message = "File already exists with this name...";
+                    }
+                }
+
+                //Movie insert
                 movieVM.Movie.Insert();
 
-
+                //Genre inserts
                 IEnumerable<int> newGenreIds = new List<int>();
                 if (movieVM.GenreIds != null)
                 {
@@ -131,6 +152,27 @@ namespace BJL.DVDCentral.MVCUI.Controllers
         {
             try
             {
+
+                //Image
+                if (movieVM.File != null)
+                {
+                    movieVM.Movie.ImagePath = movieVM.File.FileName;
+                    string target = Path.Combine(Server.MapPath("~/Images"), Path.GetFileName(movieVM.File.FileName));
+
+                    if (!System.IO.File.Exists(target))
+                    {
+                        //File doesn't already exist, save it
+                        movieVM.File.SaveAs(target);
+                        ViewBag.Message = "File uploaded successfully!";
+                    }
+                    else
+                    {
+                        //File already exists with this path
+                        ViewBag.Message = "File already exists with this name...";
+                    }
+                }
+
+                //Genres
                 IEnumerable<int> oldGenreIds = new List<int>();
                 if (Session["genreids"] != null)
                 {

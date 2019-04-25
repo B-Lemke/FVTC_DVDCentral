@@ -19,6 +19,7 @@ namespace BJL.DVDCentral.MVCUI.ViewModels
         [DisplayName("Format")]
         public FormatList FormatList { get; set; }
 
+        public HttpPostedFileBase File { get; set; }
         public IEnumerable<int> GenreIds { get; set; }
     }
 }

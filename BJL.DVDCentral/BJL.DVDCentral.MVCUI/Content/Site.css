@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.movieImg {
+    width: 150px;
+    height: auto;
+}

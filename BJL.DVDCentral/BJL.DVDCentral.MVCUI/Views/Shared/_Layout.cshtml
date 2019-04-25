@@ -44,12 +44,12 @@
             </ul>
         </div>
     </nav>
-    <div class="container-fluid">
+    <div class="container-fluid mt-2">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 border">
                 @{Html.RenderAction("Sidebar", "Genre");}
             </div>
-            <div class="container body-content col-md-9 offset-md-1">
+            <div class="container body-content col-md-9 ml-2 border p-2">
                 @RenderBody()
                 <hr />
                 <footer>
