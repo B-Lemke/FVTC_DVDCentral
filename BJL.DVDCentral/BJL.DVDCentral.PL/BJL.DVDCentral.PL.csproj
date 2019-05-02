@@ -94,6 +94,9 @@
     <Compile Include="tblRating.cs">
       <DependentUpon>DVDCentral.tt</DependentUpon>
     </Compile>
+    <Compile Include="tblUser.cs">
+      <DependentUpon>DVDCentral.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="DVDCentral.edmx">

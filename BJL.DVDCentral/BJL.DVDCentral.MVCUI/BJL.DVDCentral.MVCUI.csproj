@@ -139,13 +139,16 @@
     <Compile Include="Controllers\FormatController.cs" />
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\CustomerListCart.cs" />
     <Compile Include="ViewModels\CustomerOrders.cs" />
     <Compile Include="ViewModels\MovieGenresDirectorsRatingsFormats.cs" />
   </ItemGroup>
@@ -275,6 +278,11 @@
     <Content Include="Views\Format\Edit.cshtml" />
     <Content Include="Views\Format\Delete.cshtml" />
     <Content Include="Views\Genre\Sidebar.cshtml" />
+    <Content Include="Views\Login\Create.cshtml" />
+    <Content Include="Views\Login\Logout.cshtml" />
+    <Content Include="Views\ShoppingCart\CartDisplayWidget.cshtml" />
+    <None Include="Views\ShoppingCart\ConfirmToBuy.cshtml" />
+    <Content Include="Views\ShoppingCart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

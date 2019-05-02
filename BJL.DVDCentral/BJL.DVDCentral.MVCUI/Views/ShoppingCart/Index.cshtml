@@ -1,0 +1,53 @@
+﻿@model BJL.DVDCentral.BL.ShoppingCart
+
+@{
+    ViewBag.Title = "Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            Movie Title
+        </th>
+        <th>
+            Movie Description
+        </th>
+        <th>
+            Cost
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Items)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cost)
+        </td>
+        <td>
+            @Html.ActionLink("Remove", "RemoveFromCart", new { id = item.Id })
+        </td>
+    </tr>
+    }
+
+</table>
+
+<div>
+    <hr />
+    <div class="header">
+        Number of Items: @Model.TotalCount  <br />
+        Cost: @String.Format("{0:C}", Model.TotalCost) <br />
+        Tax: @String.Format("{0:C}", Model.Tax) <br />
+        Total Cost: @String.Format("{0:C}", Model.PostTaxTotal)
+    </div>
+    <div> @Html.ActionLink("Submit 2Order", "CommitToBuy", "ShoppingCart", null, new { @class = "btn btn-primary mt-2" })</div>
+
+</div>

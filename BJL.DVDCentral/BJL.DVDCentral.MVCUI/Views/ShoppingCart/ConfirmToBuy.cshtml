@@ -1,0 +1,16 @@
+﻿@model BJL.DVDCentral.MVCUI.ViewModels.CustomerListCart
+
+@{
+    ViewBag.Title = "AddToCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Who is this order for?</h2>
+<div class="form-group">
+    @Html.LabelFor(model => model.CustomerList, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.CustomerId, new SelectList(Model.CustomerList, "Id", "Full Name", Model.CustomerId), null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+    </div>
+</div>
+

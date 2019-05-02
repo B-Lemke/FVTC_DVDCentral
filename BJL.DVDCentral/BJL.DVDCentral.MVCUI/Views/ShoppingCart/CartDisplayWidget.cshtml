@@ -1,0 +1,9 @@
+﻿@model BJL.DVDCentral.BL.ShoppingCart
+
+<div class="pl-2">
+
+
+    @Html.ActionLink(Model.TotalCount.ToString() + " items in cart.", "Index") <br />
+
+    Cart Total: @String.Format("{0:C}", Model.TotalCost)
+</div>
