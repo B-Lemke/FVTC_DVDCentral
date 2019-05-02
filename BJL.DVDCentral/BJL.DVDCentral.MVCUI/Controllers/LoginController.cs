@@ -49,6 +49,7 @@ namespace BJL.DVDCentral.MVCUI.Controllers
 
         public ActionResult Logout()
         {
+            ViewBag.PageType = "Public";
             Session["user"] = null;
             return View();
         }
