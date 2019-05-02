@@ -281,8 +281,10 @@
     <Content Include="Views\Login\Create.cshtml" />
     <Content Include="Views\Login\Logout.cshtml" />
     <Content Include="Views\ShoppingCart\CartDisplayWidget.cshtml" />
+    <Content Include="Views\ShoppingCart\CommitToBuy.cshtml" />
     <None Include="Views\ShoppingCart\ConfirmToBuy.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\ShoppingCart\OrderPlaced.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

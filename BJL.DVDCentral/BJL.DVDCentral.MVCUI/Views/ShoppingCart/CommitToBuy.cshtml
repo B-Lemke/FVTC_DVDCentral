@@ -1,0 +1,59 @@
+﻿@model BJL.DVDCentral.MVCUI.ViewModels.CustomerListCart
+
+@{
+    ViewBag.Title = "Review Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h2>Confirm that this order is correct:</h2>
+
+    <div>
+        <table class="table">
+            <tr>
+                <th>
+                    Movie Title
+                </th>
+                <th>
+                    Cost
+                </th>
+            </tr>
+
+            @foreach (var item in Model.ShoppingCart.Items)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cost)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+            <hr />
+            <div class="header">
+                Number of Items: @Model.ShoppingCart.TotalCount  <br />
+                Cost: @String.Format("{0:C}", Model.ShoppingCart.TotalCost) <br />
+                Tax: @String.Format("{0:C}", Model.ShoppingCart.Tax) <br />
+                Total Cost: @String.Format("{0:C}", Model.ShoppingCart.PostTaxTotal)
+            </div>
+        </div>
+        @Html.ActionLink("Change Order", "Index", null, new { @class = "btn btn-danger" })
+
+        <hr />
+        <h2>Which customer is this for?</h2>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CustomerId, new SelectList(Model.CustomerList, "Id", "FullName", Model.CustomerId), null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <input type="submit" value="Submit Order" class="btn btn-primary"/>
+
+        }

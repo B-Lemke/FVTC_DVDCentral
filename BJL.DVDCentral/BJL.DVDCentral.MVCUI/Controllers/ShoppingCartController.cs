@@ -60,7 +60,7 @@ namespace BJL.DVDCentral.MVCUI.Controllers
             return RedirectToAction("Index", "Movie");
         }
 
-        public ActionResult CommitToBuy(int id)
+        public ActionResult CommitToBuy()
         {
             CustomerListCart clc = new CustomerListCart();
             clc.ShoppingCart = new ShoppingCart();
@@ -76,6 +76,34 @@ namespace BJL.DVDCentral.MVCUI.Controllers
         private void SaveCart()
         {
             Session["cart"] = cart;
+        }
+
+        [HttpPost]
+        public ActionResult CommitToBuy(CustomerListCart clc)
+        {
+            try
+            {
+                GetShoppingCart();
+                clc.ShoppingCart = cart;
+
+                clc.ShoppingCart.CustomerId = clc.CustomerId;
+
+                User currentUser = (User)Session["user"];
+                clc.ShoppingCart.CheckOut(currentUser.Id);
+
+                Session["cart"] = null;
+
+                return RedirectToAction("OrderPlaced");
+            }
+            catch (Exception ex)
+            {
+                return View(clc);
+            }
+        }
+
+        public ActionResult OrderPlaced()
+        {
+            return View();
         }
 
         [ChildActionOnly]

@@ -8,7 +8,7 @@ namespace BJL.DVDCentral.BL
 {
     public class ShoppingCart
     {
-
+        public int CustomerId { get; set; }
         public MovieList Items { get; set; }
         public int TotalCount
         {
@@ -48,30 +48,41 @@ namespace BJL.DVDCentral.BL
 
 
 
-        public void CheckOut(int userId, int customerId)
+        public void CheckOut(int userId)
         {
-            //Create the order
-            Order order = new Order();
-            order.OrderDate = DateTime.Now;
-            order.ShipDate = DateTime.Now.AddDays(5);
-            order.UserId = userId;
-            order.CustomerId = customerId;
-            order.PaymentReceipt = "";
-
-            order.Insert();
-
-            //Add an order item for each movie
-            foreach(Movie movie in Items)
+            try
             {
-                OrderItem orderItem = new OrderItem();
-                orderItem.MovieId = movie.Id;
-                orderItem.OrderId = order.Id;
-                orderItem.Quantity = 1;
+                if (Items.Count > 0)
+                {
+                    //Create the order
+                    Order order = new Order();
+                    order.OrderDate = DateTime.Now;
+                    order.ShipDate = DateTime.Now.AddDays(5);
+                    order.UserId = userId;
+                    order.CustomerId = CustomerId;
+                    order.PaymentReceipt = "";
 
-                orderItem.Insert();
+                    order.Insert();
+
+                    //Add an order item for each movie
+                    foreach (Movie movie in Items)
+                    {
+                        OrderItem orderItem = new OrderItem();
+                        orderItem.MovieId = movie.Id;
+                        orderItem.OrderId = order.Id;
+                        orderItem.Quantity = 1;
+
+                        orderItem.Insert();
+                    }
+
+                    this.Items = null;
+                }
             }
+            catch (Exception ex)
+            {
 
-            this.Items = null;
+                throw ex;
+            }
         }
 
         public void Add(Movie movie)
